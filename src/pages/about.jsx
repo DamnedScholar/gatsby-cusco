@@ -1,4 +1,5 @@
 import _ from "lodash";
+import moment from 'moment'
 import React, { Component } from "react";
 import Helmet from "react-helmet";
 import About from "../components/About/About";
@@ -7,11 +8,12 @@ import config from "../../data/SiteConfig";
 const fourOhFour = {
   html: "<h3>This page seems to exist, but doesn't have any content yet. I'm sure that we're working on filling it right now. Sorry for the inconvenience.</h3>",
   fileNode: { changeTime: "2017-11-15" }
+};
 
 class AboutPage extends Component {
   render() {
     let pageData;
-moment
+
     _.forEach(
       this.props.data.allMarkdownRemark.edges,
       (value, key, collection) => {
@@ -22,19 +24,17 @@ moment
     if (!pageData)
       pageData = fourOhFour
 
-    pubDate = new Date(pageData.fileNode.changeTime)
+    let pubDate = moment(pageData.fields.fileNode.changeTime)
 
     return (
-      <div className="about-container">
+      <article className="about">
         <Helmet title={`About | ${config.siteTitle}`} >
-          <meta name="dcterms.issued" value="{}" />
+          <meta name="dcterms.issued" value={pubDate.format('YYYY MM DD')} />
           <link rel="schema.dcterms" href="http://purl.org/dc/terms/" />
         </Helmet>
 
-        <article>
-          <div dangerouslySetInnerHTML={{ __html: pageData.html }} />
-        </article>
-      </div>
+        <div dangerouslySetInnerHTML={{ __html: pageData.html }} />
+      </article>
     );
   }
 }
