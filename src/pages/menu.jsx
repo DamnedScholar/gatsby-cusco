@@ -31,19 +31,19 @@ class MenuPage extends Component {
   }
 }
 
-export default AboutPage;
+export default MenuPage;
 
 /* eslint no-undef: "off"*/
-// export const pageQuery = graphql`
-//   query MenuQuery {
-//     menuYaml {
-//       id
-//       internal {
-//         type
-//       }
-//       parent {
-//         id
-//       }
-//     }
-//   }
-// `;
+export const pageQuery = graphql`
+  query MenuQuery {
+    menuYaml {
+      id
+      internal {
+        type
+      }
+      parent {
+        id
+      }
+    }
+  }
+`;

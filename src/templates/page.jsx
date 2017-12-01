@@ -40,23 +40,21 @@ export default class PageTemplate extends React.Component {
 
 /* eslint no-undef: "off"*/
 export const pageQuery = graphql`
-  query PageBySlug {
-    allMarkdownRemark {
-      edges {
-        node {
-          html
-          fields {
-            slug
-            source
-            parsedFilePath {
-              name
-            }
-            fileNode {
-              changeTime
-            }
-          }
-      	}
-      }
+query PageBySlug($slug: String!) {
+  markdownRemark(fields: { slug: { eq: $slug } }) {
+    html
+    timeToRead
+    excerpt
+    frontmatter {
+      title
+      cover
+      date
+      category
+      tags
+    }
+    fields {
+      slug
     }
   }
+}
 `;
