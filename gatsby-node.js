@@ -43,7 +43,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators;
 
   return new Promise((resolve, reject) => {
-    // const page = path.resolve("src/templates/page.jsx");
+    const page = path.resolve("src/templates/page.jsx");
     const postPage = path.resolve("src/templates/post.jsx");
     const tagPage = path.resolve("src/templates/tag.jsx");
     const categoryPage = path.resolve("src/templates/category.jsx");
@@ -89,16 +89,17 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           // The default script made a postPage for everything that MarkdownRemark possessed. This checks for pages stored in `pages/`, but isn't perfect (it would catch posts with "pages" in the name of a directory or markdown file, for example).
           // TODO: Write a function that presents an open-minded way of matching folders in `content/` to templates.
           // TODO: The following code also seems to not work for some reason. Oh well.
-          // if (edge.node.fileAbsolutePath.match(/pages/)) {
-          //   const component = page;
-          // }
-          // else {
-          //   const component = postPage
-          // }
+          let component
+          if (edge.node.fields.source == "pages") {
+            component = page;
+          }
+          else {
+            component = postPage
+          }
 
           createPage({
             path: edge.node.fields.slug,
-            component: postPage,
+            component: component,
             context: {
               slug: edge.node.fields.slug
             }

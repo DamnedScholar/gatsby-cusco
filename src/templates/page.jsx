@@ -4,27 +4,59 @@ import SocialLinks from "../components/SocialLinks/SocialLinks";
 import SEO from "../components/SEO/SEO";
 import config from "../../data/SiteConfig";
 import "./b16-tomorrow-dark.css";
+import "./page.css";
 
-export default class PostTemplate extends React.Component {
+export default class PageTemplate extends React.Component {
   render() {
-    const { slug } = this.props.pathContext;
-    const pageNode = this.props.data.markdownRemark;
-    const page = pageNode.frontmatter;
-    if (!page.id) {
-      page.id = slug;
-    }
-    if (!page.id) {
-      page.category_id = config.pageDefaultCategoryID;
-    }
+    // const { slug } = this.props.pathContext;
+    // const pageNode = this.props.data.markdownRemark;
+    // const page = pageNode.frontmatter;
+    // if (!page.id) {
+    //   page.id = slug;
+    // }
+    // return (
+    //   <div>
+    //     <Helmet>
+    //       <title>{`${page.title} | ${config.siteTitle}`}</title>
+    //     </Helmet>
+    //     <SEO pagePath={slug} pageNode={pageNode} postSEO />
+    //     <div>
+    //       <h1>
+    //         {page.title}
+    //       </h1>
+    //       <div dangerouslySetInnerHTML={{ __html: pageNode.html }} />
+    //       <div className="page-meta">
+    //         <SocialLinks pagePath={slug} pageNode={pageNode} />
+    //       </div>
+    //     </div>
+    //   </div>
+    // );
+
     return (
-      <div>
-        <Helmet>
-          <title>{`${page.title} | ${config.siteTitle}`}</title>
-        </Helmet>
-        <div>
-          <SEO postPath={slug} postNode={pageNode} postSEO />
-        </div>
-      </div>
-    );
+      <div>{JSON.stringify(this.props.data)}</div>
+    )
   }
 }
+
+/* eslint no-undef: "off"*/
+export const pageQuery = graphql`
+  query PageBySlug {
+    allMarkdownRemark {
+      edges {
+        node {
+          html
+          fields {
+            slug
+            source
+            parsedFilePath {
+              name
+            }
+            fileNode {
+              changeTime
+            }
+          }
+      	}
+      }
+    }
+  }
+`;

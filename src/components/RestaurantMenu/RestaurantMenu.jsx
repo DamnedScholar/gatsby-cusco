@@ -2,55 +2,15 @@ import _ from "lodash";
 import S from "string";
 import {Menu} from "semantic-ui-react";
 import React, { Component } from "react";
-import "./NavMenu.css";
+import "./RestaurantMenu.css";
 
-export class NavMenuItem extends Component {
+export class MenuItem extends Component {
   render() {
-    const {level, direction, menuItems, item, branch} = this.props
+    const {} = this.props
     let tag, submenu, className, innerText, innerHtml
 
-    // Iterate through the children of this component and create items for each of them
-    submenu = _.keys(branch).map( (childName) => {
-      let childItem
-      childItem = menuItems.filter( (menuItem) => {
-        return menuItem.name == childName
-      })[0]
-
-      if (!childItem) {
-        childItem = {
-          name: childName,
-          href: null
-        }
-      }
-
-      return (
-        <NavMenuItem level={level + 1} direction={direction} menuItems={menuItems} item={childItem} branch={branch[childName]} />
-      )
-    })
-
-    if (level > 6)
-      tag = "h6"
-    else
-      tag = "h" + level
-
-    // Each of the components includes its own name as a class.
-    className = "level-" + level
-
-    // Formulate content
-    innerText = item.title ? item.title : S(item.name).humanize().s
-
-    if (item.href) {
-      innerHtml = <a href={item.href}>{innerText}</a>
-    }
-    else {
-      innerHtml = <span>{innerText}</span>
-    }
-
     return (
-      <Menu.Item className={className} key={item.key}>
-        <Menu.Header as={tag}>{innerHtml}</Menu.Header>
-        <Menu.Menu className="submenu" children={submenu} />
-      </Menu.Item>
+      <div></div>
     )
   }
 }

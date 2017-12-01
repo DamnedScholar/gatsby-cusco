@@ -1,0 +1,10 @@
+ERROR  Failed to compile with 6 errors
+
+These relative modules were not found:
+
+* ./themes/default/assets/images/flags.png in ./~/css-loader!./~/postcss-loader!./src/layouts/semantic.min.css
+* ./themes/default/assets/fonts/icons.eot in ./~/css-loader!./~/postcss-loader!./src/layouts/semantic.min.css
+* ./themes/default/assets/fonts/icons.woff2 in ./~/css-loader!./~/postcss-loader!./src/layouts/semantic.min.css
+* ./themes/default/assets/fonts/icons.woff in ./~/css-loader!./~/postcss-loader!./src/layouts/semantic.min.css
+* ./themes/default/assets/fonts/icons.ttf in ./~/css-loader!./~/postcss-loader!./src/layouts/semantic.min.css
+* ./themes/default/assets/fonts/icons.svg in ./~/css-loader!./~/postcss-loader!./src/layouts/semantic.min.css

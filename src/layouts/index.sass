@@ -1,0 +1,77 @@
+*
+  box-sizing: border-box
+
+html
+  height: 100%
+
+body
+  margin: 0
+  padding: 20px
+
+$level-1: ( align: center, margin: 0, padding: 0.2rem, filler: 0.1rem, size: 1.5rem, default-height: 2rem )
+$level-2: ( align: flex-end, margin: 0, padding: 0rem, filler: 0.4rem, size: 1.3rem )
+$level-3: ( align: flex-end, margin: 0, padding: 0rem, filler: 0.4rem, size: 1rem, style: italic )
+
+$levels: $level-1, $level-2, $level-3
+
+div.nav-menu
+  height: 3.2rem
+  position: relative
+
+nav.ui.menu
+  position: absolute
+  width: 100%
+  justify-content: space-evenly
+  background: 0
+  border: 0
+  box-shadow: none
+  min-height: 0
+
+  &::after
+    display: none
+
+  .item
+    flex-direction: column
+    background: #AAA
+    flex-grow: 1
+
+  .item::before
+    width: 0px
+
+  overflow: visible
+
+  @for $i from 1 through length($levels)
+    $rules: nth($levels, $i)
+
+    .item.level-#{$i}
+      align-items: map-get($rules, align)
+      padding: map-get($rules, padding)
+
+      $size: 0
+      @if map-get($rules, default-height)
+        $size: map-get($rules, default-height)
+      @else
+        $size: map-get($rules, size)
+
+      max-height: $size + map-get($rules, filler) + map-get($rules, padding)
+      height: fit-content
+      overflow: hidden
+
+      -webkit-transition: max-height 250ms cubic-bezier(0.55,0.055,0.675,0.19)
+      transition:         max-height 250ms cubic-bezier(0.55,0.055,0.675,0.19)
+
+      &:hover
+        // `max-height` transitions only work when there are two explicit values
+        max-height: 20rem
+
+        // TODO: When a menu item has its `max-height` disabled or enlarged, it complies with the height of its neighbor and the menu item box expands briefly before contracting as the neighbor decreases in size. It seems to be conforming to the height of the box, but I can't identify what's making it do that. The current Chrome tab has two menu items with `max-height: none` and the smaller one expands as much as the larger ones.
+
+      .header
+        margin: map-get($rules, margin)
+        font-size: map-get($rules, size)
+        font-style: map-get($rules, style)
+        flex: none
+
+  .submenu
+    display: flex
+    flex-direction: column

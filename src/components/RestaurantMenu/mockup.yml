@@ -1,0 +1,24 @@
+---
+# A top-level key is necessary for `gatsby-transformer-yaml` to organize everything under one node.
+Menu:
+    - Appetizers:
+        - Fried Guacamole:
+            description: "Avocado wedges dredged in a mix of blue and yellow corn flour and deep fried, served with pico de gallo."
+            price: "$7"
+            vegan: true
+        - Tequeños:
+            description: "Deep-fried cheese sticks wrapped in pastry wrapper."
+            price: "$7"
+    - Entrees:
+        - Drunken Goat:
+            description: "A stew of goat, hominy, and spices."
+            price: "$15"
+    - Beverages:
+        - Pisco Sour:
+            description: "A citrusy, surprisingly creamy cocktail from the Andes."
+            price: "$4"
+            vegan: false
+        - Fountain Drink:
+            description: "A stew of goat, hominy, and spices."
+            price: "$15"
+...

@@ -2,7 +2,6 @@ import _ from "lodash";
 import moment from 'moment'
 import React, { Component } from "react";
 import Helmet from "react-helmet";
-import About from "../components/About/About";
 import config from "../../data/SiteConfig";
 
 const fourOhFour = {
