@@ -1,74 +1,83 @@
 import _ from "lodash";
 import S from "string";
-import {Menu} from "semantic-ui-react";
+import {Grid, Header, Icon, Item} from "semantic-ui-react";
 import React, { Component } from "react";
-import "./RestaurantMenu.css";
+import "./RestaurantMenu.sass";
 
-export class MenuItem extends Component {
+class MenuItem extends Component {
   render() {
-    const {} = this.props
-    let tag, submenu, className, innerText, innerHtml
+    const {name, details} = this.props
+    const {price, description, dietary} = details
+    let dietIcons = []
+
+    if (dietary) {
+      const diets = {
+        vegan: "leaf",
+        unknown: "question circle"
+      }
+
+      _.forEach(dietary, (diet, i, all) => {
+        let icon
+
+        if (diets[diet])
+          icon = diets[diet]
+        else
+          icon = diets.unknown
+
+        dietIcons.push(<Icon name={icon} className={"diet-" + diet} key={i} />)
+      })
+    }
 
     return (
-      <div></div>
+      <Item>
+        <Header as="h3" className="item-name">{name}</Header>
+        <span className="price">{price}</span>
+        <article>{description}</article>
+        <aside>{dietIcons}</aside>
+      </Item>
     )
   }
 }
 
-export default class NavMenu extends Component {
+class MenuCategory extends Component {
   render() {
-    const {menuItems} = this.props
-    const direction = "vertical"
-    let menu
-    let menuHierarchy = {}
+    const {name, items} = this.props
+    let catItems = []
 
-    menuItems.sort((a, b) => {
-      if (a.path < b.path)
-        return -1
-      if (a.path > b.path)
-        return 1
-      return 0
-    })
-
-    _.forEach(menuItems, (item, i, collection) => {
-      let hierarchyPath = []
-
-      if (item.path) {
-        _.forEach(item.path, (value, j, fullPath) => {
-          if (j == fullPath.length || value == "")
-            void(0)
-          else
-            hierarchyPath = _.concat(hierarchyPath, value)
-        })
-      }
-
-      hierarchyPath = _.concat(hierarchyPath, item.name)
-      menuHierarchy = _.set(menuHierarchy, hierarchyPath, {})
-    })
-
-    // Iterate through the children of this component and create items for each of them
-    menu = _.keys(menuHierarchy).map( (childName) => {
-      let item
-      item = menuItems.filter( (menuItem) => {
-        return menuItem.name == childName
-      })[0]
-
-      if (!item) {
-        item = {
-          name: childName,
-          href: null
-        }
-      }
-
-      return (
-        <NavMenuItem level={1} direction={direction} menuItems={menuItems} item={item} branch={menuHierarchy[childName]} />
+    _.forIn(items, (details, name, object) => {
+      catItems.push(
+        <MenuItem name={name} details={details} />
       )
     })
 
     return (
-      <div className="nav-menu">
-        <Menu as="nav" children={menu} />
-      </div>
+      <Grid.Column className="category">
+        <Header as="h2" className="category-name">{name}</Header>
+        {catItems}
+      </Grid.Column>
+    )
+  }
+}
+
+export default class RestaurantMenu extends Component {
+  render() {
+    const {items} = this.props
+    let menuItems = []
+
+    _.forIn(items, (items, name, object) => {
+      console.log(items)
+
+      menuItems.push(
+        <MenuCategory name={name} items={items} key={menuItems.length} />
+      )
+    })
+
+    return (
+      <Grid className="restaurant-menu" columns={3} stackable>
+        <Grid.Row stretched>
+          {menuItems}
+        </Grid.Row>
+      </Grid>
     );
   }
 }

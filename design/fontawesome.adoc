@@ -1,0 +1,5 @@
+# FA 5:
+React Component: https://github.com/FortAwesome/react-fontawesome
+
+# FA 4:
+Semantic UI has an `Icon` element that implements FA 4.7.
