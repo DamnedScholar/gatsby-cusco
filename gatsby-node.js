@@ -1,3 +1,4 @@
+const fs = require("fs")
 const path = require("path");
 const _ = require("lodash");
 const webpackLodashPlugin = require("lodash-webpack-plugin");
@@ -47,10 +48,38 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     const postPage = path.resolve("src/templates/post.jsx");
     const tagPage = path.resolve("src/templates/tag.jsx");
     const categoryPage = path.resolve("src/templates/category.jsx");
+
+    // Before automatically creating pages, I need to check for files in `src/pages/` and make an object representing the hierarchy so that I can compare that with each markdown file and override the ones that have a JS or JSX file.
+    let src
+
+    graphql(
+      `{
+        allFile {
+          edges {
+            node {
+              sourceInstanceName
+              relativePath
+            }
+          }
+        }
+      }`
+    ).then(result => {
+      if (result.errors) {
+        /* eslint no-console: "off"*/
+        console.log(result.errors);
+        reject(result.errors);
+      }
+
+      data.allFile.edges.forEach(edge => {
+        let path = edge.node.relativePath.split('/')
+        if (edge.node.sourceInstanceName == "src")
+          _.set(src, path, {})
+      })
+    })
+
     resolve(
       graphql(
-        `
-        {
+        `{
           allMarkdownRemark {
             edges {
               node {
@@ -64,8 +93,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               }
             }
           }
-        }
-      `
+        }`
       ).then(result => {
         if (result.errors) {
           /* eslint no-console: "off"*/
@@ -75,35 +103,40 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
         const tagSet = new Set();
         const categorySet = new Set();
+
         result.data.allMarkdownRemark.edges.forEach(edge => {
-          if (edge.node.frontmatter.tags) {
+          if (edge.node.frontmatter.tags)
             edge.node.frontmatter.tags.forEach(tag => {
               tagSet.add(tag);
             });
-          }
 
-          if (edge.node.frontmatter.category) {
-            categorySet.add(edge.node.frontmatter.category);
-          }
+          if (edge.node.frontmatter.category)
+            categorySet.add(edge.node.frontmatter.category)
 
-          // The default script made a postPage for everything that MarkdownRemark possessed. This checks for pages stored in `pages/`, but isn't perfect (it would catch posts with "pages" in the name of a directory or markdown file, for example).
-          // TODO: Write a function that presents an open-minded way of matching folders in `content/` to templates.
-          // TODO: The following code also seems to not work for some reason. Oh well.
           let component
-          if (edge.node.fields.source == "pages") {
+          if (edge.node.fields.source == "pages")
             component = page;
-          }
-          else {
+          else
             component = postPage
-          }
 
-          createPage({
-            path: edge.node.fields.slug,
-            component: component,
-            context: {
-              slug: edge.node.fields.slug
-            }
-          });
+          let path = edge.node.fields.slug.split('/').unshift('pages')
+          if (typeof _.get(src, path, false) === 'object') {
+            var output = "Duplicate page found at " + JSON.stringify(path) + "."
+
+            fs.appendFile('create-page-log.txt', output, (err) => {
+              console.log(err)
+            })
+
+            return
+          }
+          else
+            createPage({
+              path: edge.node.fields.slug,
+              component: component,
+              context: {
+                slug: edge.node.fields.slug
+              }
+            });
         });
 
         const tagList = Array.from(tagSet);
@@ -133,7 +166,6 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 };
 
 exports.modifyWebpackConfig = ({ config, stage }) => {
-  if (stage === "build-javascript") {
+  if (stage === "build-javascript")
     config.plugin("Lodash", webpackLodashPlugin, null);
-  }
 };

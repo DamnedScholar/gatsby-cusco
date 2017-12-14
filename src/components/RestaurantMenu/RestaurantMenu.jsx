@@ -65,8 +65,6 @@ export default class RestaurantMenu extends Component {
     let menuItems = []
 
     _.forIn(items, (items, name, object) => {
-      console.log(items)
-
       menuItems.push(
         <MenuCategory name={name} items={items} key={menuItems.length} />
       )
