@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import Helmet from "react-helmet";
-import {Container, Image, Menu} from "semantic-ui-react";
+import {Container, Grid, Image, Menu} from "semantic-ui-react";
 import config from "../../data/SiteConfig";
 import NavMenu from "../components/NavMenu/NavMenu";
 import 'semantic-ui/dist/semantic.min.css';
@@ -92,11 +92,17 @@ export default class MainLayout extends React.Component {
           <meta name="description" content={config.siteDescription} />
         </Helmet>
         <div className="site-head">
-          <div clasNames="logo">
-            <Image src={logo} />
-            <span className="cafe">Café</span><br />
-            <span className="cusco">Cusco</span>
-          </div>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                <span className="cafe">Café</span><br />
+                <span clamassNe="cusco">Cusco</span>
+              </Grid.Column>
+              <Grid.Column>
+                <Image src={logo} className="logo" />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
           <NavMenu menuItems={menuItems} directionality={directionality} />
         </div>
         {children()}
