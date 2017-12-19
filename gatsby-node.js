@@ -76,7 +76,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           _.set(src, path, {})
       })
     })
-
+    
     resolve(
       graphql(
         `{

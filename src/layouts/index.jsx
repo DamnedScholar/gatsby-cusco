@@ -4,7 +4,7 @@ import Helmet from "react-helmet";
 import {Container, Grid, Image, Menu} from "semantic-ui-react";
 import config from "../../data/SiteConfig";
 import NavMenu from "../components/NavMenu/NavMenu";
-import 'semantic-ui/dist/semantic.min.css';
+import './semantic.min.css';
 
 // Import logo assets
 import logo from '../../design/logo-bowl.png'

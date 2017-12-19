@@ -1,6 +1,7 @@
 import _ from "lodash";
 import S from "string";
 import {Grid, Header, Icon, Item} from "semantic-ui-react";
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import React, { Component } from "react";
 import "./RestaurantMenu.sass";
 
@@ -15,6 +16,10 @@ class MenuItem extends Component {
         vegan: "leaf",
         unknown: "question circle"
       }
+      const diets2 = {
+        vegan: "leaf",
+        unknown: "question-circle"
+      }
 
       _.forEach(dietary, (diet, i, all) => {
         let icon
@@ -25,6 +30,12 @@ class MenuItem extends Component {
           icon = diets.unknown
 
         dietIcons.push(<Icon name={icon} className={"diet-" + diet} key={i} />)
+
+        if (diets[diet])
+          icon = diets2[diet]
+        else
+          icon = diets2.unknown
+        dietIcons.push(<FontAwesomeIcon icon={icon} className={"diet-" + diet} key={i} />)
       })
     }
 
