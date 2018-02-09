@@ -1,0 +1,29 @@
+* It's important to first have a complete page that doesn't rely on JavaScript. Gatsby should generate a static menu like it does now and the DOM structure of that menu should have robust "handles" for JS to grab onto and manipulate.
+* tocca.js is a tiny touch library with no issues and recent maintenance.
+  - https://github.com/GianlucaGuarini/Tocca.js
+
+## Expected Behavior
+### Desktop
+1. Load full-page menu displaying as many items as feasible. A sufficiently wide or tall window should be able to see the entire menu, but smaller windows shouldn't be crowded.
+2. For screen readers, the page should introduce itself to the user and then proceed through the menu.
+  * Should this be automated by default? What do people expect?
+
+### Mobile
+1. Tablets can load part of a full menu, or all headers with a lot of room. Maybe it's optimal to start with the entry section expanded and expand other sections as you go along.
+2. Phones should start with just the headers.
+3. For screen readers, the page should introduce itself and indicate that it's responsive to touch gestures.
+
+## Interactive Menu Controls
+* A single tap on a header gives it the class `.active-header` and re-renders its content with `aria-live="assertive"`.
+* A single tap on an item gives it the class `.active-item` and re-renders its content with `aria-live="assertive"`.
+* A swipe up steps to the previous item.
+  - This means that individual items need to have keys and to be imported into an array that accurately represents how they'll be navigated.
+* A swipe down steps to the next item.
+* A swipe left pulls up an instruction menu.
+
+## ARIA
+I need to understand roles. https://www.w3.org/TR/wai-aria-1.1/#tree seems like a good starting point.
+
+https://www.w3.org/WAI/GL/wiki/Using_ARIA_trees is a crummy example, but any real-syntax example is a good example.
+
+The `aria-activedescendant` property lives on a parent element and the value should contain the `id` of a child or owned element. This should go on the menu container itself and be updated whenever the active item or header changes. https://www.w3.org/TR/wai-aria-1.1/#aria-activedescendant

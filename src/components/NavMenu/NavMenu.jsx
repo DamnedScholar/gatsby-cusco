@@ -7,10 +7,11 @@ import "./NavMenu.css";
 export class NavMenuItem extends Component {
   render() {
     const {level, direction, menuItems, item, branch} = this.props
-    let tag, submenu, className, innerText, innerHtml
+    let tag, className, innerText, innerHtml
+    let submenu = []
 
     // Iterate through the children of this component and create items for each of them
-    submenu = _.keys(branch).map( (childName) => {
+    _.keys(branch).forEach( (childName) => {
       let childItem
       childItem = menuItems.filter( (menuItem) => {
         return menuItem.name == childName
@@ -23,8 +24,8 @@ export class NavMenuItem extends Component {
         }
       }
 
-      return (
-        <NavMenuItem level={level + 1} direction={direction} menuItems={menuItems} item={childItem} branch={branch[childName]} />
+      submenu.push(
+        <NavMenuItem key={submenu.length} level={level + 1} direction={direction} menuItems={menuItems} item={childItem} branch={branch[childName]} />
       )
     })
 
@@ -59,7 +60,7 @@ export default class NavMenu extends Component {
   render() {
     const {menuItems} = this.props
     const direction = "vertical"
-    let menu
+    let menu = []
     let menuHierarchy = {}
 
     menuItems.sort((a, b) => {
@@ -87,7 +88,7 @@ export default class NavMenu extends Component {
     })
 
     // Iterate through the children of this component and create items for each of them
-    menu = _.keys(menuHierarchy).map( (childName) => {
+    _.keys(menuHierarchy).forEach( (childName) => {
       let item
       item = menuItems.filter( (menuItem) => {
         return menuItem.name == childName
@@ -100,8 +101,8 @@ export default class NavMenu extends Component {
         }
       }
 
-      return (
-        <NavMenuItem level={1} direction={direction} menuItems={menuItems} item={item} branch={menuHierarchy[childName]} />
+      menu.push(
+        <NavMenuItem key={menu.length} level={1} direction={direction} menuItems={menuItems} item={item} branch={menuHierarchy[childName]} />
       )
     })
 

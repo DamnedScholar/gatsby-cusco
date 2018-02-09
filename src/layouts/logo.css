@@ -1,9 +1,13 @@
 @font-face {
   font-family: 'Augustus Beveled';
-  src: url('./augustus_beveled-webfont.eot');
+  src: url('./fonts/augustus_beveled-webfont.eot');
+  src: url('./fonts/augustus_beveled-webfont.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/augustus_beveled-webfont.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Stonepath';
-  src: url('./stonepath-webfont.eot');
+  src: url('./fonts/stonepath-webfont.eot');
+  src: url('./fonts/stonepath-webfont.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/stonepath-webfont.ttf') format('truetype');
 }

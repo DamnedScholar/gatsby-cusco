@@ -4,21 +4,21 @@ import Helmet from "react-helmet";
 import {Container, Grid, Image, Menu} from "semantic-ui-react";
 import config from "../../data/SiteConfig";
 import NavMenu from "../components/NavMenu/NavMenu";
-import './semantic.min.css';
+import 'semantic-ui/dist/semantic.min.css';
 
 // Import logo assets
 import logo from '../../design/logo-bowl.png'
 import augustus from '../../design/fonts/augustus_beveled-webfont.eot'
 import stonepath from '../../design/fonts/stonepath-webfont.eot'
-//import "./logo.css";
+import "./logo.css";
 
 import "./index.sass";
 
 function humanize(str) {
   return str
-      .replace(/^[\s_]+|[\s_]+$/g, '')
-      .replace(/[_\s]+/g, ' ')
-      .replace(/^[a-z]/, function(m) { return m.toUpperCase(); });
+    .replace(/^[\s_]+|[\s_]+$/g, '')
+    .replace(/[_\s]+/g, ' ')
+    .replace(/^[a-z]/, function(m) { return m.toUpperCase(); });
 }
 
 export default class MainLayout extends React.Component {
@@ -92,14 +92,14 @@ export default class MainLayout extends React.Component {
           <meta name="description" content={config.siteDescription} />
         </Helmet>
         <div className="site-head">
-          <Grid>
-            <Grid.Row>
-              <Grid.Column>
-                <span className="cafe">Café</span><br />
-                <span clamassNe="cusco">Cusco</span>
-              </Grid.Column>
-              <Grid.Column>
+          <Grid columns={2}>
+            <Grid.Row stretched>
+              <Grid.Column className="left">
                 <Image src={logo} className="logo" />
+              </Grid.Column>
+              <Grid.Column className="right">
+                <Grid.Row className="cafe">Cafe</Grid.Row>
+                <Grid.Row className="cusco">Cusco</Grid.Row>
               </Grid.Column>
             </Grid.Row>
           </Grid>
