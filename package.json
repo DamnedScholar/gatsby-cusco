@@ -8,6 +8,7 @@
     "@fortawesome/fontawesome": "^1.0.1",
     "@fortawesome/react-fontawesome": "^0.0.16",
     "babel-plugin-lodash": "^3.2.11",
+    "boom": "^7.1.1",
     "gatsby": "^1.9.138",
     "gatsby-link": "^1.6.7",
     "gatsby-plugin-catch-links": "^1.0.4",
