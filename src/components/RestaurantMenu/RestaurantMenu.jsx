@@ -1,6 +1,6 @@
 import _ from "lodash";
 import S from "string";
-import {Grid, Header, Icon, Item} from "semantic-ui-react";
+import {Button, Grid, Header, Icon, Item} from "semantic-ui-react";
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import React, { Component } from "react";
 import Helmet from 'react-helmet'
@@ -82,7 +82,7 @@ class MenuCategory extends Component {
 export default class RestaurantMenu extends Component {
   ariaId(items) {
     // This function is for calculating the `id` attributes of the elements in order to pass them to the browser-side script. I'm making it a separate function because it's important for ARIA integration but not necessary for the normal menu to render. Plus, it's an elegant solution to replace `JSON.stringify()` with my own function that outputs exactly what I want.
-    let idList = ["i-menu"]
+    let idList = ["i-menu_help"]
     let catIndex = 0
     let itemIndex = 0
 
@@ -124,9 +124,18 @@ export default class RestaurantMenu extends Component {
 
     return (
       <Grid className="restaurant-menu" columns={3} stackable
-        id={id} aria-live="rude">
-        <Grid.Row stretched>
+        id={id} aria-live="polite">
+        <div id={id + "_help"}>
+          <p>Welcome to the Café Cusco interactive menu. Swipe right to move to the next item or left to go back.</p>
+        </div>
+        <Grid.Row stretched id={id + "_contents"} aria-hidden="true" aria-live="polite">
           {menuItems}
+        </Grid.Row>
+        <Grid.Row stretched aria-hidden="true">
+          <Button icon="industry" id="btn-menuInit" />
+          <Button icon="step backward" id="btn-menuPrev" />
+          <Button icon="play" id="btn-menuRead" />
+          <Button icon="step forward" id="btn-menuNext" />
         </Grid.Row>
         <Helmet script={[
           {

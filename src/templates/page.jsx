@@ -39,22 +39,22 @@ export default class PageTemplate extends React.Component {
 }
 
 /* eslint no-undef: "off"*/
-export const pageQuery = graphql`
-query PageBySlug($slug: String!) {
-  markdownRemark(fields: { slug: { eq: $slug } }) {
-    html
-    timeToRead
-    excerpt
-    frontmatter {
-      title
-      cover
-      date
-      category
-      tags
-    }
-    fields {
-      slug
-    }
-  }
-}
-`;
+// export const pageQuery = graphql`
+// query PageBySlug($slug: String!) {
+//   markdownRemark(fields: { slug: { eq: $slug } }) {
+//     html
+//     timeToRead
+//     excerpt
+//     frontmatter {
+//       title
+//       cover
+//       date
+//       category
+//       tags
+//     }
+//     fields {
+//       slug
+//     }
+//   }
+// }
+// `;
